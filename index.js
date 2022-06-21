@@ -6,14 +6,6 @@ const scissors_svg = `<svg xmlns="http://www.w3.org/2000/svg" width="51" height=
 
 
 
-
-/**CACHE */
-const CACHE_VERSION = 1;
-const CURRENT_CACHES = {
-  score: '-cache-v' + CACHE_VERSION,
-  choiceContainer: false,
-};
-
 /**GLOBALS */
 const battleContainer = document.getElementsByClassName('battle-container')[0];
 const choiceContainer = document.getElementsByClassName('choices-container')[0];
@@ -21,30 +13,34 @@ const choiceContainer = document.getElementsByClassName('choices-container')[0];
 var score = 0;
 var playerChoice = '';
 var compChoice = ''
-battleContainer.style.display = 'none';
-choiceContainer.style.display = 'flex';
+
+// battleContainer.style.display = 'none';
+// choiceContainer.style.display = 'flex';
 var mainContainer = true;
 
 function flipContainerVisibility(){
     let mc = sessionStorage.getItem('main_container') === 'true';
-    sessionStorage.setItem('main_container',!mc); 
-    if(battleContainer.style.display !== 'none'){
+    
+    if(!mc){
         battleContainer.style.display = 'none';
         choiceContainer.style.display = 'flex';
-    }else{
+    } else { 
         battleContainer.style.display = 'grid';
         choiceContainer.style.display = 'none';
     }
+    sessionStorage.setItem('main_container',!mc);
 }
 
+function chooseChoice(e,choice){
+    setBattleStage(choice);
+}
 
-function isWinner(){
+function isUserWinner(){
     const [p,c] = [playerChoice, compChoice];
     if(p === c) return 'DRAW';
     else if(p === 'rock' && c === 'scissors' 
     || p === 'scissors' && c === 'paper' 
     || p === 'paper' && c === 'rock'){
-        incrementScore();
         return 'YOU WIN';
     }else{
         return 'YOU LOSE';
@@ -61,32 +57,37 @@ function setBattleStage(choice){
     }
     let choice_storage = playerChoice[0] + compChoice[0];
     sessionStorage.setItem('choice', choice_storage);
-    document.getElementsByClassName('battle-outcome')[0].innerHTML = isWinner();
+    let outcome = isUserWinner();
+
+    if(outcome === 'YOU WIN')
+        incrementScore();
+
+    renderOutcome();
+}
+
+function renderOutcome(){
+    document.getElementsByClassName('battle-outcome')[0].innerHTML = isUserWinner();
 }
 
 
-function chooseChoice(e,choice){
-    setBattleStage(choice);
-}
-
-
-function initializeEventListenersForChoices(){
+function addEventListenersForChoices(){
     const choices = ["rock","paper","scissors"];
-    document.getElementById("score-label").innerHTML = `${score}`;
+    // document.getElementById("score-label").innerHTML = `${score}`;
     choices.forEach(choice =>{
-        const elem =  document.getElementsByClassName(`choice-${choice}`);
-        elem[0].addEventListener("click", (e)=>{chooseChoice(e,choice)});
+        const elem =  document.getElementById(`choice-${choice}`);
+        elem.addEventListener("click",
+            (e)=>{chooseChoice(e,choice)});
     });
 }
 
 
-function initializeEventListenersToPlayAgain(){
-    const choices = ["rock","paper","scissors"];
-    choices.forEach(choice =>{
-        const elem =  document.getElementsByClassName(`choice-${choice}`);
-        elem[0].addEventListener("click", (e)=>{chooseChoice(e,choice)});
-    });
-}
+// function initializeEventListenersToPlayAgain(){
+//     const choices = ["rock","paper","scissors"];
+//     choices.forEach(choice =>{
+//         const elem =  document.getElementsByClassName(`choice-${choice}`);
+//         elem[0].addEventListener("click", (e)=>{chooseChoice(e,choice)});
+//     });
+// }
 
 
 function renderBattleChoice(){
@@ -119,13 +120,13 @@ function generateCompChoice(){
 }
 
 function initializeEventListenersForScore(){
-    
+    return;
 }
+
 function renderScore(){
     let score_storage = parseInt(sessionStorage.getItem('score'));
     document.getElementById("score-label").innerHTML = `${score_storage}`;
 }
-
 
 function renderMainPage(){
     let mc = sessionStorage.getItem('main_container') === 'true';
@@ -138,7 +139,6 @@ function renderMainPage(){
     }
 }
 
-
 function incrementScore(){
     let score_storage = parseInt(sessionStorage.getItem('score'));
     sessionStorage.setItem('score',score_storage+1);
@@ -150,7 +150,10 @@ function playAgain(){
 }
 
 function generateChoiceSVG(choice){
-    let choice_svg = {'rock':rock_svg, 'paper':paper_svg, 'scissors':scissors_svg }[choice];
+    // Choose the right svg for the respective choice
+    let choice_svg = {'rock':rock_svg,
+                     'paper':paper_svg, 
+                     'scissors':scissors_svg}[choice];
     return `<div class="inner-choice">${choice_svg}</div>`;
 }
 
@@ -180,7 +183,8 @@ function loadSesssionStorage(){
     if(sessionStorage.getItem('main_container')){
         mainContainer = sessionStorage.getItem('main_container');
     }else{
-        mainContainer = sessionStorage.setItem('main_container',true);
+        sessionStorage.setItem('main_container',false);
+        flipContainerVisibility();
     }
 
     if(sessionStorage.getItem('choice')){
@@ -189,8 +193,9 @@ function loadSesssionStorage(){
         compChoice = parseLetterForChoice(player_and_cpu[1]);
         renderBattleChoice();
         renderCompChoice();
+        renderOutcome();
     }else{
-        mainContainer = sessionStorage.setItem('main_container','rr');
+        sessionStorage.setItem('main_container','rr');
     }
 }
 
@@ -198,5 +203,5 @@ function loadSesssionStorage(){
 loadSesssionStorage()
 renderMainPage();
 renderScore();
-initializeEventListenersForChoices();
+addEventListenersForChoices();
 initializeEventListenersForScore();
