@@ -106,7 +106,7 @@ body{
     width: 45%;
 }
 
-.grow-hover :hover svg{
+.grow-hover:hover svg{
     transform: scale(1.25);
 }
 
