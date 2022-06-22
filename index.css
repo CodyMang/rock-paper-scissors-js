@@ -27,6 +27,7 @@ html{
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none;
 }
+
 body{
     background-image: var(--main-bg-color);
     font-family: 'Barlow Semi Condensed', sans-seriff;
@@ -214,6 +215,7 @@ body{
 .battle-user{
     grid-column-start: 2;
     grid-column-end: 3;
+    grid-row-start:1;
     justify-self: start;
     background-color: blue;
 }
@@ -221,14 +223,76 @@ body{
 .battle-other{
     grid-column-start: 5;
     grid-column-end: 5;
+    grid-row-start:1;
     justify-self: end;
     background-color: red;
 }
+
+
+.battle-other + label{
+    color:white;
+    grid-column-start: 5;
+    grid-column-end: 6                   ;
+    grid-row-start: 1;
+    justify-self: end;
+    align-self: end;
+    flex-wrap: wrap;
+}
+
+.battle-user + label{
+    
+    color:white;
+    justify-self: center;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start:1;
+    margin-top: 65%;
+}
+
 
 [class*=battle] svg{
     transform: scale(1.2);
 }
 
+.rules-row{
+    display: flex;
+    flex-direction: row;
+    height:auto;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    /* padding-right: 30px; */
+}
+
+#rules-button{
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding:8px 30px 8px 30px;
+    border-radius: 8px;
+    border: 2px solid var(--accent-bg-color);;
+    background-color: transparent;
+    color:white;
+}
+
+#rules-button:hover{
+    color:rgba(2, 2,2, 0);
+    background-color: var(--accent-bg-color);
+}
+
+.modal-container{
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    background-color: white;
+    z-index:5;
+    position:fixed;
+    top:0;
+    left:0;
+    height: 100%;
+    width: 100%;
+}
 
 @media screen and (min-width: 520px) {
 
@@ -246,6 +310,25 @@ body{
         grid-template-rows: 1fr 0fr;
     }
 
+    .battle-other + label{
+        color:white;
+        grid-column-start: 3;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        margin-top: 35%;
+        justify-self: center;
+    }
+
+    .battle-user + label{
+        margin-top: 35%;
+        color:white;
+        justify-self: center;
+        align-self: auto;
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start:1;
+    }
+
     .play-again-container{
         width: 50%;
         grid-column-start: 2;
@@ -261,6 +344,7 @@ body{
     .battle-user{
         grid-column-start: 1;
         grid-column-end: 1;
+        grid-row-start:1;
     }
 
     .play-again-button{
@@ -336,7 +420,7 @@ body{
 
 @media screen and (min-width: 1336px) {
     .battle-container{
-        width: 1200px;
+        width: 1000px;
     }
     .battle-user, .battle-other{
         height: 300px;

@@ -5,7 +5,6 @@ const scissors_svg = `<svg xmlns="http://www.w3.org/2000/svg" width="51" height=
 </svg>`;
 
 
-
 /**GLOBALS */
 const battleContainer = document.getElementsByClassName('battle-container')[0];
 const choiceContainer = document.getElementsByClassName('choices-container')[0];
@@ -18,17 +17,20 @@ var compChoice = ''
 // choiceContainer.style.display = 'flex';
 var mainContainer = true;
 
-function flipContainerVisibility(){
+function renderMainContainer(){
     let mc = sessionStorage.getItem('main_container') === 'true';
-    
-    if(!mc){
+    if(mc){
         battleContainer.style.display = 'none';
         choiceContainer.style.display = 'flex';
     } else { 
         battleContainer.style.display = 'grid';
         choiceContainer.style.display = 'none';
     }
+}
+function flipContainerVisibility(){
+    let mc = sessionStorage.getItem('main_container') === 'true';
     sessionStorage.setItem('main_container',!mc);
+    renderMainContainer()
 }
 
 function chooseChoice(e,choice){
@@ -180,11 +182,11 @@ function loadSesssionStorage(){
         score = sessionStorage.getItem('score');
     }
 
-    if(sessionStorage.getItem('main_container')){
-        mainContainer = sessionStorage.getItem('main_container');
+    if(sessionStorage.getItem('main_container') === null){
+        sessionStorage.setItem('main_container',true);      
     }else{
-        sessionStorage.setItem('main_container',false);
-        flipContainerVisibility();
+        mainContainer = sessionStorage.getItem('main_container');
+        renderMainContainer();
     }
 
     if(sessionStorage.getItem('choice')){
@@ -195,13 +197,28 @@ function loadSesssionStorage(){
         renderCompChoice();
         renderOutcome();
     }else{
-        sessionStorage.setItem('main_container','rr');
+        sessionStorage.setItem('choice','rr');
     }
 }
 
+function addCloseRulesModalButton(){
+    const elem =  document.getElementById(`close-modal-button`);
+    elem.addEventListener("click",
+            (e)=>{
+                const modal = 
+                document.getElementsByClassName('modal-container')[0];
+                modal.style.display = 'none';
+            });
+}
+
+function addRulesButtonModal(){
+    const modal = document.getElementsByClassName('modal-container')[0];
+    modal.style.display = 'flex';
+}
 
 loadSesssionStorage()
 renderMainPage();
 renderScore();
 addEventListenersForChoices();
+addCloseRulesModalButton();
 initializeEventListenersForScore();
