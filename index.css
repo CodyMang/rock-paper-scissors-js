@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;700&display=swap');
 
 :root {
+    --main-font-type: 'Barlow Semi Condensed', sans-seriff;
     --main-bg-color: radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%));
     --accent-bg-color: hsl(217, 16%, 45%); 
     --score-text-color: hsl(229, 64%, 46%);
@@ -30,7 +31,7 @@ html{
 
 body{
     background-image: var(--main-bg-color);
-    font-family: 'Barlow Semi Condensed', sans-seriff;
+    font-family: var(--main-font-type);
     margin: 0px;
 }
 
@@ -165,12 +166,10 @@ body{
     height: 360px;
     width: 360px;
     display: grid;
-    grid-template-columns: .5fr 80px 80px 80px 80px .5fr;
+    grid-template-columns: .5fr 2fr 2fr .5fr;
     grid-template-rows: 1.25fr .75fr ;
     justify-content: space-between;
 }
-
-
 
 .play-again-button{
     font-family: 'Barlow Semi Condensed', sans-seriff;
@@ -198,7 +197,7 @@ body{
 .play-again-container{
     grid-row-start:2;
     grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-end: 3;
     width: 200%;
     display:flex;
     flex-direction: column;
@@ -207,9 +206,10 @@ body{
 }
 
 .battle-user, .battle-other{
-    height: 66.67%;
-    width: 187.5%;
+    height: 51.2%;
+    width: 80%;
     border-radius: 50%;
+    margin-bottom: 15px;
 }
 
 .battle-user{
@@ -220,39 +220,43 @@ body{
     background-color: blue;
 }
 
-.battle-other{
-    grid-column-start: 5;
-    grid-column-end: 5;
+
+.battle-choice-containter-1{
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.battle-choice-containter-2{
+    grid-column-start: 3;
+    grid-column-end: 3;
     grid-row-start:1;
+}
+
+.battle-other{
     justify-self: end;
     background-color: red;
 }
 
-
-.battle-other + label{
+[class*=battle-choice-containter]{
+    height: 100%;
+    width:100%;
+    display:flex;
+    flex-direction: column;
     color:white;
-    grid-column-start: 5;
-    grid-column-end: 6                   ;
-    grid-row-start: 1;
-    justify-self: end;
-    align-self: end;
-    flex-wrap: wrap;
+    font-size: 12px;
+    font-family: var(--main-font-type);
+    font-weight: 700;
 }
 
-.battle-user + label{
-    
-    color:white;
-    justify-self: center;
-    grid-column-start: 2;
-    grid-column-end: 2;
-    grid-row-start:1;
-    margin-top: 65%;
+.pulse-animation{
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	transform: scale(1);
+	animation: pulse 2s infinite;
 }
 
-
-[class*=battle] svg{
-    transform: scale(1.2);
-}
+/* [class*=battle] svg{
+    transform: scale(1);
+} */
 
 .rules-row{
     display: flex;
@@ -276,15 +280,16 @@ body{
 }
 
 #rules-button:hover{
-    color:rgba(2, 2,2, 0);
+    color:hsl(214, 47%, 23%);
+    font-weight: 700;
     background-color: var(--accent-bg-color);
 }
 
 .modal-container{
     display: none;
     flex-direction: column;
-    justify-content: space-around;
-    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
     background-color: white;
     z-index:5;
     position:fixed;
@@ -292,6 +297,15 @@ body{
     left:0;
     height: 100%;
     width: 100%;
+}
+
+.modal-container > h1{
+    margin: 0;
+    color:var(--dark-text-color)
+}
+
+#close-modal-button:hover{
+    
 }
 
 @media screen and (min-width: 520px) {
@@ -376,6 +390,7 @@ body{
         width: 480px;
         height: 480px;
     }
+
     .triangle{
         transform:scale(1.33);
     }
@@ -398,6 +413,19 @@ body{
     [class*=battle] .choice-rock{
         box-shadow: inset 0 -10px 0 0 var(--rock-accent-red) ; 
     }
+
+
+    .modal-container{
+        height: 500px;
+        width: 500px;
+        border-radius: 20px;
+        top:50%;
+        left:50%;
+        position: absolute;
+        /*These margin values need to match the height and width*/
+        margin-top: -250px;
+        margin-left: -250px;
+    }
 }
 
 
@@ -415,7 +443,6 @@ body{
     .score-container{
         width:150px;
     }
-    
 }
 
 @media screen and (min-width: 1336px) {
@@ -432,3 +459,20 @@ body{
 
 
 
+/*ANIMATIONS*/
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 ;
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
