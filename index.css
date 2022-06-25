@@ -139,7 +139,7 @@ body {
 }
 
 .bg-traingle {
-    position: fixed;
+    position: absolute;
 }
 
 .first-row-choice {

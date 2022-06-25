@@ -3,7 +3,10 @@
 This is a solution to the [Rock, Paper, Scissors challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/rock-paper-scissors-game-pTgwgvgH). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
 ## Overview
+### Links
 
+- [Solution URL](https://www.frontendmentor.io/challenges/rock-paper-scissors-game-pTgwgvgH/hub/rock-paper-scissors-with-html-css-and-js-5DPT-9VRYT)
+- [Live Site URL](https://codymang.github.io/rock-paper-scissors-js/)
 ### The challenge
 
 Users should be able to:
@@ -19,11 +22,6 @@ Users should be able to:
 ![](./screenshots/screenshot-battle.jpg)
 ![](./screenshots/screenshot-mobile-home.jpg)
 ![](./screenshots/screenshot-mobile-battle.jpg)
-
-### Links
-
-- [Solution URL](https://www.frontendmentor.io/challenges/rock-paper-scissors-game-pTgwgvgH/hub/rock-paper-scissors-with-html-css-and-js-5DPT-9VRYT)
-- [Live Site URL](https://codymang.github.io/rock-paper-scissors-js/)
 
 ### Built with
 
