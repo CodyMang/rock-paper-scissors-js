@@ -22,8 +22,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- [Solution URL](https://www.frontendmentor.io/challenges/rock-paper-scissors-game-pTgwgvgH/hub/rock-paper-scissors-with-html-css-and-js-5DPT-9VRYT)
+- [Live Site URL](https://codymang.github.io/rock-paper-scissors-js/)
 
 ### Built with
 
