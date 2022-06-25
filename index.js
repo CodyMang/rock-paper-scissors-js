@@ -13,9 +13,6 @@ var score = 0;
 var playerChoice = '';
 var compChoice = ''
 
-// battleContainer.style.display = 'none';
-// choiceContainer.style.display = 'flex';
-var mainContainer = true;
 
 function renderMainContainer(){
     let mc = sessionStorage.getItem('main_container') === 'true';
@@ -49,6 +46,11 @@ function isUserWinner(){
     }
 }
 
+function addAndRemoveAnimationClassNTimes(className, animationName,timeOutMS){
+    const elem = document.getElementsByClassName(className)[0];
+    elem.classList.add(animationName);
+    // setTimeout(()=>elem.classList.remove(animationName),timeOutMS)
+}
 
 function setBattleStage(choice){
     playerChoice = choice;
@@ -61,8 +63,13 @@ function setBattleStage(choice){
     sessionStorage.setItem('choice', choice_storage);
     let outcome = isUserWinner();
 
-    if(outcome === 'YOU WIN')
+    if(outcome === 'YOU WIN'){
         incrementScore();
+        addAndRemoveAnimationClassNTimes('battle-choice-containter-1', 'pulse-animation',6000);
+    }
+    else if(outcome === 'YOU LOSE'){
+        addAndRemoveAnimationClassNTimes('battle-choice-containter-2', 'pulse-animation',6000);
+    }
 
     renderOutcome();
 }
@@ -81,15 +88,6 @@ function addEventListenersForChoices(){
             (e)=>{chooseChoice(e,choice)});
     });
 }
-
-
-// function initializeEventListenersToPlayAgain(){
-//     const choices = ["rock","paper","scissors"];
-//     choices.forEach(choice =>{
-//         const elem =  document.getElementsByClassName(`choice-${choice}`);
-//         elem[0].addEventListener("click", (e)=>{chooseChoice(e,choice)});
-//     });
-// }
 
 
 function renderBattleChoice(){
@@ -149,6 +147,10 @@ function incrementScore(){
 
 function playAgain(){
     flipContainerVisibility();
+    const elem1 = document.getElementsByClassName('battle-choice-containter-1')[0];
+    const elem2 = document.getElementsByClassName('battle-choice-containter-2')[0];
+    elem1.classList.remove('pulse-animation');
+    elem2.classList.remove('pulse-animation');
 }
 
 function generateChoiceSVG(choice){

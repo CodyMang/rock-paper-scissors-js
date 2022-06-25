@@ -166,13 +166,14 @@ body{
     height: 360px;
     width: 360px;
     display: grid;
-    grid-template-columns: .5fr 2fr 2fr .5fr;
+    grid-template-columns: .25fr 2fr 2fr .25fr;
     grid-template-rows: 1.25fr .75fr ;
     justify-content: space-between;
 }
 
 .play-again-button{
     font-family: 'Barlow Semi Condensed', sans-seriff;
+    z-index: 10;
     background-color: white;
     color: hsl(237, 49%, 15%);
     font-weight: 700;
@@ -205,22 +206,6 @@ body{
     justify-content: space-evenly;
 }
 
-.battle-user, .battle-other{
-    height: 51.2%;
-    width: 80%;
-    border-radius: 50%;
-    margin-bottom: 15px;
-}
-
-.battle-user{
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start:1;
-    justify-self: start;
-    background-color: blue;
-}
-
-
 .battle-choice-containter-1{
     grid-column-start: 2;
     grid-column-end: 3;
@@ -232,14 +217,45 @@ body{
     grid-row-start:1;
 }
 
+.battle-user, .battle-other{
+    height: 64%;
+    width: 90%;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    z-index: 5;
+    background-color: rgb(0,0,0,.25);
+}
+
 .battle-other{
     justify-self: end;
-    background-color: red;
+    background-color: var(--dark-text-color);
+    transition: width 3s;
+    transition-delay: 2s;
+}
+
+
+
+.pulse-choice{
+    display: none;
+    position: absolute;
+    z-index: -2;
+    height: 144px;
+    width: 144px;
+    background-color: rgba(255, 255, 255,.15);
+    border-radius: 50%;
+    /* I don't know why it is off by 30px */
+    margin-bottom: 30px;
+}
+
+.pulse-animation > .pulse-choice{
+    display: block;
+    animation: pulse 3s linear infinite;
+    animation-delay: calc(var(--order) * 1s)
 }
 
 [class*=battle-choice-containter]{
     height: 100%;
-    width:100%;
+    width: 92%;
     display:flex;
     flex-direction: column;
     color:white;
@@ -248,16 +264,6 @@ body{
     font-weight: 700;
 }
 
-.pulse-animation{
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-	transform: scale(1);
-	animation: pulse 2s infinite;
-}
-
-/* [class*=battle] svg{
-    transform: scale(1);
-} */
-
 .rules-row{
     display: flex;
     flex-direction: row;
@@ -265,7 +271,6 @@ body{
     width: 100%;
     justify-content: center;
     align-content: center;
-    /* padding-right: 30px; */
 }
 
 #rules-button{
@@ -286,6 +291,7 @@ body{
 }
 
 .modal-container{
+    
     display: none;
     flex-direction: column;
     justify-content: space-evenly;
@@ -297,6 +303,7 @@ body{
     left:0;
     height: 100%;
     width: 100%;
+    z-index: 100;
 }
 
 .modal-container > h1{
@@ -304,47 +311,28 @@ body{
     color:var(--dark-text-color)
 }
 
-#close-modal-button:hover{
-    
-}
+
+
 
 @media screen and (min-width: 520px) {
-
     .battle-user, .battle-other{
-        height: 50%;
+        height: 100%;
         width: 100%;
         border-radius: 50%;
         align-self: center;
+        order: 2;
+        margin-top: 15px;
     }
 
     .battle-container{
-        height: 600px;
+        height: 300px;
         width: 800px;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 0fr;
-    }
-
-    .battle-other + label{
-        color:white;
-        grid-column-start: 3;
-        grid-column-end: 3;
-        grid-row-start: 1;
-        margin-top: 35%;
-        justify-self: center;
-    }
-
-    .battle-user + label{
-        margin-top: 35%;
-        color:white;
-        justify-self: center;
-        align-self: auto;
-        grid-column-start: 1;
-        grid-column-end: 1;
-        grid-row-start:1;
+        grid-template-rows: 1fr 0;
     }
 
     .play-again-container{
-        width: 50%;
+        width: 100%;
         grid-column-start: 2;
         grid-row-start: 1;
         justify-content: center;
@@ -355,7 +343,7 @@ body{
         font-size: 4em;
     }
  
-    .battle-user{
+    .battle-choice-containter-1{
         grid-column-start: 1;
         grid-column-end: 1;
         grid-row-start:1;
@@ -367,10 +355,15 @@ body{
         letter-spacing: 4px;
     }
 
-    .battle-other{
+    .battle-choice-containter-2{
         grid-column-start: 3;
         grid-column-end: 3;
         grid-row-start: 1;
+    }
+
+    [class^=battle-choice-containter] > label{
+        order: 1;
+        font-size: 20px;
     }
 
     .choices-container{
@@ -382,10 +375,10 @@ body{
         width: 600px;
     }
     
-    .title-container{
-        width: 480px;
+    .rules-row{
+        width: auto;
+        justify-self: end;
     }
-
     .bg-traingle{
         width: 480px;
         height: 480px;
@@ -416,15 +409,22 @@ body{
 
 
     .modal-container{
-        height: 500px;
-        width: 500px;
+        height: 520px;
+        width: 520px;
         border-radius: 20px;
         top:50%;
         left:50%;
         position: absolute;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         /*These margin values need to match the height and width*/
-        margin-top: -250px;
-        margin-left: -250px;
+        margin-top: -240px;
+        margin-left: -260px;
+    }
+    .pulse-choice{
+        height: 245px;
+        width: 245px;
+        margin-bottom: 0;
+        margin-top:24px ;
     }
 }
 
@@ -443,6 +443,7 @@ body{
     .score-container{
         width:150px;
     }
+
 }
 
 @media screen and (min-width: 1336px) {
@@ -462,17 +463,10 @@ body{
 /*ANIMATIONS*/
 @keyframes pulse {
 	0% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 ;
+        opacity: .55;
 	}
-
-	70% {
-		transform: scale(1);
-		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-	}
-
-	100% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    100% {
+		transform: scale(2);
+        opacity: 0;
 	}
 }
