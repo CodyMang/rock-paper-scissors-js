@@ -1,5 +1,5 @@
 # Front-end Style Guide
-
+PROVIDED BY FRONT-END MENTOR
 ## Layout
 
 The designs were created to the following widths:
