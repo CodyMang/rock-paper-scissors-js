@@ -11,7 +11,7 @@
   
 </head>
 <body>
-<div class="main-container">
+<main class="main-container">
   <div class="title-container">
     <h1 class="title-text">
       ROCK<br>PAPER<br>SCISSORS
@@ -32,7 +32,7 @@
       <label>YOU PICKED</label>
     </div>
     <div class="play-again-container">
-      <h1 class="battle-outcome"></h1>
+      <span class="battle-outcome"></span>
       <button class="play-again-button" onclick="playAgain()">PLAY AGAIN</button>
     </div>
     <div class='battle-choice-containter-2'>
@@ -79,10 +79,10 @@
 <div class='modal-container'>
   <h1>RULES</h1>
   <img height=300 width=300 src="./images/image-rules.svg" alt="Rock beats scissors, scissors beats paper, paper beats rock">
-  <img height=20 width=20 id="close-modal-button" src="./images/icon-close.svg" />
+  <img height=20 width=20 id="close-modal-button" src="./images/icon-close.svg" alt='Close button'/>
   
 </div>
-</div>
+</main>
 </body>
 
 <script src="index.js"></script>

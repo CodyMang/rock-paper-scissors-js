@@ -46,6 +46,7 @@ body {
 }
 
 .title-container {
+    
     height: 100px;
     width: 300px;
     border-radius: 5px;
@@ -56,6 +57,7 @@ body {
     line-height: 20px;
     align-items: center;
     justify-content: space-between;
+    
 }
 
 
